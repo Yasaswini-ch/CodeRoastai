@@ -34,7 +34,9 @@ fun CodeRoastMainScreenContent(
     isRoasting: Boolean,
     onRoast: () -> Unit,
     onShowExamples: () -> Unit,
-    onClearResults: () -> Unit
+    onClearResults: () -> Unit,
+    onFixCode: () -> Unit = {},
+    onShare: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
 
@@ -121,7 +123,9 @@ fun CodeRoastMainScreenContent(
             RoastResultsSection(
                 roasts = roastResults,
                 personality = personality,
-                onTryAgain = onClearResults
+                onTryAgain = onClearResults,
+                onFixCode = onFixCode,
+                onShare = onShare
             )
         }
     }
@@ -484,7 +488,9 @@ private fun IntensityEmoji(emoji: String, level: Int, currentLevel: Int) {
 fun RoastResultsSection(
     roasts: List<String>,
     personality: String,
-    onTryAgain: () -> Unit
+    onTryAgain: () -> Unit,
+    onFixCode: () -> Unit,
+    onShare: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Surface(
@@ -534,7 +540,7 @@ fun RoastResultsSection(
         ) {
             // Fix Code button
             Button(
-                onClick = { /* TODO: Navigate to Fix screen */ },
+                onClick = onFixCode,
                 modifier = Modifier
                     .weight(1f)
                     .height(48.dp),
@@ -558,7 +564,7 @@ fun RoastResultsSection(
 
             // Share button
             OutlinedButton(
-                onClick = { /* TODO: Share functionality */ },
+                onClick = onShare,
                 modifier = Modifier
                     .weight(1f)
                     .height(48.dp),

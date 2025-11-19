@@ -72,6 +72,12 @@ fun CodeRoastApp() {
                     },
                     onNavigateToExamples = {
                         navController.navigate(Screen.Examples.route)
+                    },
+                    onNavigateToFix = {
+                        navController.navigate(Screen.Fix.route)
+                    },
+                    onNavigateToShare = {
+                        navController.navigate(Screen.Share.route)
                     }
                 )
             }
@@ -105,6 +111,59 @@ fun CodeRoastApp() {
 
             composable(Screen.Settings.route) {
                 SettingsScreen(repository = repository)
+            }
+
+            composable(Screen.Fix.route) {
+                // Generate a simple fix result for demonstration
+                val fixResult = remember {
+                    com.example.coderoastai.CodeFixGenerator.FixResult(
+                        originalCode = sharedCodeInput,
+                        fixedCode = "// Fixed code will be generated here\n" + sharedCodeInput.replace(
+                            "temp",
+                            "result"
+                        ),
+                        improvements = listOf(
+                            com.example.coderoastai.CodeFixGenerator.Improvement(
+                                "naming",
+                                "Improved variable names",
+                                null
+                            ),
+                            com.example.coderoastai.CodeFixGenerator.Improvement(
+                                "structure",
+                                "Better code organization",
+                                null
+                            )
+                        ),
+                        beforeScore = 45,
+                        afterScore = 75,
+                        metricsChange = com.example.coderoastai.CodeFixGenerator.MetricsChange(
+                            linesBefore = sharedCodeInput.lines().size,
+                            linesAfter = sharedCodeInput.lines().size + 2,
+                            complexityBefore = 5,
+                            complexityAfter = 3,
+                            issuesFixed = 3
+                        )
+                    )
+                }
+
+                FixComparisonScreen(
+                    fixResult = fixResult,
+                    onApplyFix = { fixedCode ->
+                        sharedCodeInput = fixedCode
+                        navController.popBackStack()
+                    },
+                    onBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Screen.Share.route) {
+                ShareScreen(
+                    code = sharedCodeInput,
+                    language = sharedLanguage,
+                    score = 50, // Default score
+                    roasts = sharedRoastResults,
+                    onDismiss = { navController.popBackStack() }
+                )
             }
         }
     }
@@ -171,7 +230,9 @@ fun HomeScreenWithNav(
     roastResults: List<String>,
     onRoastResultsChange: (List<String>) -> Unit,
     onSaveToHistory: (List<String>) -> Unit,
-    onNavigateToExamples: () -> Unit
+    onNavigateToExamples: () -> Unit,
+    onNavigateToFix: () -> Unit = {},
+    onNavigateToShare: () -> Unit = {}
 ) {
     var isRoasting by remember { mutableStateOf(false) }
     var showExamplesDialog by remember { mutableStateOf(false) }
@@ -199,7 +260,9 @@ fun HomeScreenWithNav(
             }
         },
         onShowExamples = { showExamplesDialog = true },
-        onClearResults = { onRoastResultsChange(emptyList()) }
+        onClearResults = { onRoastResultsChange(emptyList()) },
+        onFixCode = onNavigateToFix,
+        onShare = onNavigateToShare
     )
 
     if (showExamplesDialog) {

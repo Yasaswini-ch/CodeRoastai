@@ -8,6 +8,8 @@ sealed class Screen(val route: String, val title: String, val icon: String) {
     object Examples : Screen("examples", "Examples", "📚")
     object History : Screen("history", "History", "🕐")
     object Settings : Screen("settings", "Settings", "⚙️")
+    object Fix : Screen("fix", "Fix Code", "🔧")
+    object Share : Screen("share", "Share", "📤")
 }
 
 /**
