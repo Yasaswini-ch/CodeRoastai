@@ -155,12 +155,12 @@ fun CategoryTabs(
                         labelColor = TextSecondary
                     ),
                     border = FilterChipDefaults.filterChipBorder(
-                        enabled = true,
-                        selected = selectedCategory == category,
                         borderColor = if (selectedCategory == category) NeonCyan else GlassWhite20,
                         selectedBorderColor = NeonCyan,
                         borderWidth = 1.dp,
-                        selectedBorderWidth = 2.dp
+                        selectedBorderWidth = 2.dp,
+                        enabled = true,
+                        selected = selectedCategory == category
                     )
                 )
             }

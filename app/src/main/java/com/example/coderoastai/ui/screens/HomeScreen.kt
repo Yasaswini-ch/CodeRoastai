@@ -527,14 +527,68 @@ fun RoastResultsSection(
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Action buttons row
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Fix Code button
+            Button(
+                onClick = { /* TODO: Navigate to Fix screen */ },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = NeonGreen,
+                    contentColor = DeepBlack
+                )
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "🔧", fontSize = 18.sp)
+                    Text(
+                        text = "FIX CODE",
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+            }
+
+            // Share button
+            OutlinedButton(
+                onClick = { /* TODO: Share functionality */ },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = NeonCyan),
+                border = BorderStroke(2.dp, NeonCyan)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "📤", fontSize = 18.sp)
+                    Text(
+                        text = "SHARE",
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedButton(
             onClick = onTryAgain,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
             shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = NeonCyan),
-            border = BorderStroke(2.dp, NeonCyan)
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = NeonRed),
+            border = BorderStroke(2.dp, NeonRed)
         ) {
             Text(
                 text = "↻ Try Different Settings",
